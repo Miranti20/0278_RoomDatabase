@@ -17,6 +17,22 @@ class EntryViewModel(
     var uiStateSiswa by mutableStateOf(UIStateSiswa())
         private set
 
+    /* Fungsi untuk memvalidasi input */
+    private fun validasiInput(
+        uiState: DetailSiswa = uiStateSiswa.detailSiswa
+    ): Boolean {
+        return with(uiState) {
+            nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
+        }
+    }
+
+    fun updateUiState(detailSiswa: DetailSiswa) {
+        uiStateSiswa = UIStateSiswa(
+            detailSiswa = detailSiswa,
+            isEntryValid = validasiInput(detailSiswa)
+        )
+    }
+
     /**
      * Mewakili Status Ui untuk Siswa.
      */
