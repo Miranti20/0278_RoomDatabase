@@ -29,8 +29,28 @@ fun HostNavigasi(
                 }
             )
         }
+
+        composable(DestinasiEntry.route) {
+            EntrySiswaScreen(
+                navigateBack = { navController.popBackStack() }
+            )
+        }
     }
-    }
+}
+
+@Composable
+fun EntrySiswaScreen(navigateBack: () -> Boolean) {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun HomeScreen(navigateToItemEntry: () -> Unit) {
+    TODO("Not yet implemented")
+}
+
+
+
+
 
 
 
