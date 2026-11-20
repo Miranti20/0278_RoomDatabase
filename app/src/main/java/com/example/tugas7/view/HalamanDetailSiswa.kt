@@ -179,9 +179,16 @@ fun DetailDataSiswa(
 }
 
 @Composable
-fun BarisDetailData(labelResID: Int, itemDetail: String, modifier: Modifier) {
-    TODO("Not yet implemented")
+private fun BarisDetailData(
+    @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+        Text(stringResource(labelResID))
+        Spacer(modifier = Modifier.weight(1f))
+        Text(text = itemDetail, fontWeight = FontWeight.Bold)
+    }
 }
+
 
 @Composable
 fun DeleteConfirmationDialog(
