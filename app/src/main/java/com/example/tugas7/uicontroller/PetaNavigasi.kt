@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.tugas7.view.EntrySiswaScreen
+import com.example.tugas7.view.HomeScreen
 
 @Composable
 fun SiswaApp(navController: NavHostController = rememberNavController()) {
@@ -37,20 +39,3 @@ fun HostNavigasi(
         }
     }
 }
-
-@Composable
-fun EntrySiswaScreen(navigateBack: () -> Boolean) {
-    TODO("Not yet implemented")
-}
-
-@Composable
-fun HomeScreen(navigateToItemEntry: () -> Unit) {
-    TODO("Not yet implemented")
-}
-
-
-
-
-
-
-
