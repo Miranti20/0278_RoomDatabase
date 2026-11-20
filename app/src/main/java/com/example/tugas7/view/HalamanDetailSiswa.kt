@@ -42,13 +42,12 @@ import com.example.tugas7.viewmodel.DetailSiswaUiState
 import com.example.tugas7.viewmodel.DetailViewModel
 import com.example.tugas7.viewmodel.PenyediaViewModel
 import com.example.tugas7.viewmodel.toSiswa
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailSiswaScreen(
-    // navigateToEditItem: (Int) -> Unit,
+    navigateToEditItem: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = viewModel(factory = PenyediaViewModel.Factory)
@@ -65,7 +64,7 @@ fun DetailSiswaScreen(
             val uiState = viewModel.uiDetailState.collectAsState()
             FloatingActionButton(
                 onClick = {
-                    //navigateToEditItem(uiState.value.detailSiswa.id)
+                    navigateToEditItem(uiState.value.detailSiswa.id)
                 },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
@@ -82,16 +81,18 @@ fun DetailSiswaScreen(
         val coroutineScope = rememberCoroutineScope()
         BodyDetailDataSiswa(
             detailSiswaUiState = uiState.value,
-            onDelete = { coroutineScope.launch {
-                viewModel.deleteSiswa()
-                navigateBack()
-            }},
+            onDelete = {
+                coroutineScope.launch {
+                    viewModel.deleteSiswa()
+                    navigateBack()
+                }
+            },
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         )
     }
-    }
+}
 
 @Composable
 private fun BodyDetailDataSiswa(
@@ -130,10 +131,12 @@ private fun BodyDetailDataSiswa(
 
 @Composable
 fun DetailDataSiswa(
-    siswa: Siswa, modifier: Modifier = Modifier
+    siswa: Siswa,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier, colors = CardDefaults.cardColors(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         )
@@ -148,30 +151,21 @@ fun DetailDataSiswa(
                 labelResID = R.string.nama1,
                 itemDetail = siswa.nama,
                 modifier = Modifier.padding(
-                    horizontal = dimensionResource(
-                        id = R.dimen
-                            .padding_medium
-                    )
+                    horizontal = dimensionResource(id = R.dimen.padding_medium)
                 )
             )
             BarisDetailData(
                 labelResID = R.string.alamat1,
                 itemDetail = siswa.alamat,
                 modifier = Modifier.padding(
-                    horizontal = dimensionResource(
-                        id = R.dimen
-                            .padding_medium
-                    )
+                    horizontal = dimensionResource(id = R.dimen.padding_medium)
                 )
             )
             BarisDetailData(
                 labelResID = R.string.telpon1,
                 itemDetail = siswa.telpon,
                 modifier = Modifier.padding(
-                    horizontal = dimensionResource(
-                        id = R.dimen
-                            .padding_medium
-                    )
+                    horizontal = dimensionResource(id = R.dimen.padding_medium)
                 )
             )
         }
@@ -180,7 +174,9 @@ fun DetailDataSiswa(
 
 @Composable
 private fun BarisDetailData(
-    @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
+    @StringRes labelResID: Int,
+    itemDetail: String,
+    modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
         Text(stringResource(labelResID))
@@ -209,10 +205,6 @@ private fun DeleteConfirmationDialog(
             TextButton(onClick = onDeleteConfirm) {
                 Text(stringResource(R.string.yes))
             }
-        })
+        }
+    )
 }
-
-
-
-
-
