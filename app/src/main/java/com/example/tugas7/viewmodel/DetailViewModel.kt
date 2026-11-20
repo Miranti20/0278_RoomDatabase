@@ -19,6 +19,20 @@ class DetailViewModel(
     private val idSiswa: Int =
         checkNotNull(savedStateHandle[DestinasiDetailSiswa.itemIdArg])
 
+    val uiDetailState: StateFlow<DetailSiswaUiState> =
+        repositoriSiswa.getSiswaStream(idSiswa)
+            .filterNotNull()
+            .map { siswa ->
+                DetailSiswaUiState(
+                    detailSiswa = siswa.toDetailSiswa()
+                )
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = DetailSiswaUiState()
+            )
+
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
