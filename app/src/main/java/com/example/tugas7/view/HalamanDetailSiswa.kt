@@ -42,6 +42,7 @@ import com.example.tugas7.viewmodel.DetailSiswaUiState
 import com.example.tugas7.viewmodel.DetailViewModel
 import com.example.tugas7.viewmodel.PenyediaViewModel
 import com.example.tugas7.viewmodel.toSiswa
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,6 +78,26 @@ fun DetailSiswaScreen(
         },
         modifier = modifier
     ) { innerPadding ->
-        // Konten utama dihubungkan pada commit berikutnya
+        val uiState = viewModel.uiDetailState.collectAsState()
+        val coroutineScope = rememberCoroutineScope()
+        BodyDetailDataSiswa(
+            detailSiswaUiState = uiState.value,
+            onDelete = { coroutineScope.launch {
+                viewModel.deleteSiswa()
+                navigateBack()
+            }},
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+        )
     }
+    }
+
+@Composable
+fun BodyDetailDataSiswa(
+    detailSiswaUiState: DetailSiswaUiState,
+    onDelete: () -> Job,
+    modifier: Modifier
+) {
+    TODO("Not yet implemented")
 }
